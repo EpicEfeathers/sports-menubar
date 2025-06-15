@@ -1,6 +1,7 @@
 import requests
 import pprint
 from datetime import date
+import json
 
 def recent_game_id(team_id:int):
     today = date.today().isoformat()
@@ -29,22 +30,31 @@ def recent_game_id(team_id:int):
     return game_id
 
 def extract_game_info(game_id:int):
-    link = f"https://statsapi.mlb.com/api/v1.1/game/{game_id}/feed/live"
-    content = requests.get(link).json()
+    '''link = f"https://statsapi.mlb.com/api/v1.1/game/{game_id}/feed/live"
+    content = requests.get(link).json()'''
 
-    current_play = content['liveData']['plays']['currentPlay']
+    with open("example_data.json") as f:
+        content = json.load(f)
+
+    live_data = content['liveData']
+
+    current_play = live_data['plays']['currentPlay']
     outs = current_play["count"]["outs"]
 
-    #pprint.pprint(current_play)
-    '''runners = current_play.get('runners', [])
-    bases = [False, False, False]
+    offense = live_data['linescore']['offense']
+    bases = [ # check to see if they are in offense (base runners)
+        'first' in offense,
+        'second' in offense,
+        'third' in offense
+    ]
 
-    #pprint.pprint(runners)
-    for runner in runners:
-        pprint.pprint(runner)'''
+    home_score = live_data['linescore']['teams']['home']['runs']
+
+    away_score = live_data['linescore']['teams']['away']['runs']
+
+    return bases, outs, home_score, away_score
     
-    pprint.pprint(content["liveData"]["linescore"]['offense'])
+    
 
 
-#extract_game_info(777531)
-print(recent_game_id(141))
+print(extract_game_info(777531))
