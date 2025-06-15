@@ -21,14 +21,14 @@ def draw_im(bases=[False, False, False], outs=0):
 
     occupied_base = filled_square.rotate(45, expand=True) # expand makes sure it expands past 20x20 to fit rotation
 
-    # 3rd
-    base.paste(occupied_base if bases[2] else empty_base, (-1, 15), occupied_base if bases[2] else empty_base)
+    # 1st
+    base.paste(occupied_base if bases[0] else empty_base, (-1, 15), occupied_base if bases[0] else empty_base)
 
     # 2nd
     base.paste(occupied_base if bases[1] else empty_base, (15, -1), occupied_base if bases[1] else empty_base)
 
-    #1st
-    base.paste(occupied_base if bases[0] else empty_base, (31, 15), occupied_base if bases[0] else empty_base)
+    # 3rd
+    base.paste(occupied_base if bases[2] else empty_base, (31, 15), occupied_base if bases[2] else empty_base)
 
 
     empty_circle = Image.new("RGBA", (15, 15), (0, 0, 0, 0)) # background
