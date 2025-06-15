@@ -48,10 +48,7 @@ def draw_im(bases=[False, False, False], outs=0):
     file_name = f"bases/bases{int(bases[0])}{int(bases[1])}{int(bases[2])}_outs{outs}.png"
 
     base.save(file_name)
-'''
+
 for base_combo in all_base_combos:
     for out_num in all_outs:
         draw_im(base_combo, out_num)
-        '''
-
-draw_im(all_base_combos[5], 0)
