@@ -3,8 +3,8 @@ import os
 import json
 import webbrowser
 
-import api_utils
-import utils
+import utils.api_utils as api_utils
+import utils.utils as utils
 
 def return_info_image_path(bases:list, outs:int):
     return f"bases/bases{int(bases[0])}{int(bases[1])}{int(bases[2])}_outs{outs}.png"
