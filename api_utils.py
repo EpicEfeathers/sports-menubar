@@ -56,10 +56,13 @@ def extract_game_info(game_id:int):
         content = json.load(f)'''
 
     try:
-        live_data = content['liveData']
+        game_data = content['gameData']
+        game_state = game_data['status']['abstractGameState']
 
-        home_abbr = content['gameData']['teams']['home']['abbreviation']
-        away_abbr = content['gameData']['teams']['away']['abbreviation']
+        home_abbr = game_data['teams']['home']['abbreviation']
+        away_abbr = game_data['teams']['away']['abbreviation']
+
+        live_data = content['liveData']
 
         current_play = live_data['plays']['currentPlay']
         outs = current_play["count"]["outs"]
@@ -80,7 +83,19 @@ def extract_game_info(game_id:int):
         inning = linescore['currentInning']
         is_top = linescore['isTopInning']
 
-        return home_abbr, away_abbr, bases, outs, home_score, away_score, inning, is_top
+        return {
+            "game_state": game_state,
+            "home_abbr": home_abbr,
+            "away_abbr": away_abbr,
+            "bases": bases,
+            "outs": outs,
+            "home_score": home_score,
+            "away_score": away_score,
+            "inning": inning,
+            "is_top": is_top
+        }
+
+        #return game_state, home_abbr, away_abbr, bases, outs, home_score, away_score, inning, is_top
 
     except Exception as e:
         print(f"Exception occurred while fetching data: {e}")
