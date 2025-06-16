@@ -1,6 +1,7 @@
 import rumps
 import os
 import json
+import webbrowser
 
 import api_utils
 import utils
@@ -34,7 +35,9 @@ class MenuBarSports(rumps.App):
                 item.state = True
             self.options_menu.add(item)
 
-        self.menu = [self.options_menu]
+        self.live_feed_item = rumps.MenuItem("Live Game Feed (MLB.com)", callback=self.open_live_feed)
+
+        self.menu = [self.options_menu, self.live_feed_item]
 
     def select_option(self, sender):
         for title, item in self.options_menu.items():
@@ -50,6 +53,10 @@ class MenuBarSports(rumps.App):
 
         # update the menu bar
         self.update_team_info()
+
+    def open_live_feed(self, _):
+        print("Got here")
+        webbrowser.open(f"https://www.mlb.com/gameday/{self.game_id}/live")
 
 
     @rumps.timer(10)
