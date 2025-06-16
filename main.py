@@ -10,7 +10,6 @@ def return_info_image_path(bases:list, outs:int):
 class MenuBarSports(rumps.App):
     def __init__(self):
         super().__init__("MenuBarSports") # default message (should never show)
-
         self.team_id = 119
 
     @rumps.timer(10)
@@ -20,8 +19,16 @@ class MenuBarSports(rumps.App):
         # all data
         info = api_utils.extract_game_info(self.game_id)
 
-        im_path = return_info_image_path(info['bases'], info['outs'])
-        self.update_title(info, im_path)
+        if info:
+            # if bases (and outs) info has been returned
+            if 'bases' in info:
+                im_path = return_info_image_path(info['bases'], info['outs'])
+            else:
+                im_path = None
+
+            self.update_title(info, im_path)
+        else:
+            print("Error in fetching data")
 
     # properly create title
     def update_title(self, info, im_path):
@@ -33,7 +40,6 @@ class MenuBarSports(rumps.App):
             else:
                 # if three outs
                 self.icon = "bases/bases000_outs0.png"
-
 
                 info['is_top'] = not info['is_top']
                 if info['is_top']:

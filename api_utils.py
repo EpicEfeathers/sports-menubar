@@ -62,6 +62,17 @@ def extract_game_info(game_id:int):
         home_abbr = game_data['teams']['home']['abbreviation']
         away_abbr = game_data['teams']['away']['abbreviation']
 
+        # if previewing today's game
+        if game_state == "Preview":
+            return {
+                "game_state": game_state,
+                "home_abbr": home_abbr,
+                "away_abbr": away_abbr,
+                "home_score": 0,
+                "away_score": 0
+            }
+
+        # else, game is live or final (or postponed or smth)
         live_data = content['liveData']
 
         current_play = live_data['plays']['currentPlay']
