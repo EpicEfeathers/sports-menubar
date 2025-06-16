@@ -9,6 +9,7 @@ for team in data["teams"]:
     results.append({
         "id": team["id"],
         "name": team["name"],
+        "team_name": team["teamName"],
         "abbreviation": team["abbreviation"],
         "logo": f"https://www.mlbstatic.com/team-logos/{team["id"]}.svg"
     })
