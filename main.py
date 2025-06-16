@@ -16,6 +16,7 @@ class MenuBarSports(rumps.App):
     @rumps.timer(10)
     def updating_info(self, _):
         self.game_id = api_utils.recent_game_id(self.team_id)
+        print(self.game_id)
 
         # all data
         home_abbreviation, away_abbreviation, bases, outs, home_score, away_score, inning, is_top = api_utils.extract_game_info(self.game_id)
@@ -31,7 +32,10 @@ class MenuBarSports(rumps.App):
         else:
             # if three outs
             self.icon = "bases/bases000_outs0.png"
-            is_top = False
+
+            is_top = not is_top
+            if is_top:
+                inning += 1
         
         self.title = f"{'↑' if is_top else '↓'}{inning}  {away_abbreviation} {away_score} | {home_score} {home_abbreviation}"
 

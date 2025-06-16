@@ -49,10 +49,10 @@ def recent_game_id(team_id:int):
     return game_id
 
 def extract_game_info(game_id:int):
-    link = f"https://statsapi.mlb.com/api/v1.1/game/{game_id}/feed/live"
-    content = make_api_call(link)
+    game_feed_url = f"https://statsapi.mlb.com/api/v1.1/game/{game_id}/feed/live"
+    content = make_api_call(game_feed_url)
 
-    '''with open("example_data.json") as f:
+    '''with open("example_data/in_between_innings_(bottom_to_top).json") as f:
         content = json.load(f)'''
 
     try:
