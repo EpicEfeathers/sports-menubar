@@ -64,8 +64,13 @@ def extract_game_info(game_id:int):
 
         # if previewing today's game
         if game_state == "Preview":
+            time = game_data['datetime']['time']
+            ampm = game_data['datetime']['ampm']
+            
             return {
                 "game_state": game_state,
+                "time": time,
+                "ampm": ampm,
                 "home_abbr": home_abbr,
                 "away_abbr": away_abbr,
                 "home_score": 0,

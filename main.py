@@ -82,7 +82,11 @@ class MenuBarSports(rumps.App):
             
             self.title = f"{'↑' if info['is_top'] else '↓'}{info['inning']}  {info['away_abbr']} {info['away_score']} | {info['home_score']} {info['home_abbr']}"
         else:
-            self.title = f"{info['game_state']} • {info['away_abbr']} {info['away_score']} | {info['home_score']} {info['home_abbr']}"
+            if info['game_state'] == "Final":
+                game_info = info['game_state']
+            else:
+                game_info = f"{info['time']}{info['ampm']}"
+            self.title = f"{game_info} • {info['away_abbr']} {info['away_score']} | {info['home_score']} {info['home_abbr']}"
 
 if __name__ == "__main__":
     MenuBarSports().run()
