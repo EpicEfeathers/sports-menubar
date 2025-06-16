@@ -3,6 +3,7 @@ import os
 import json
 
 import api_utils
+import utils
 
 def return_info_image_path(bases:list, outs:int):
     return f"bases/bases{int(bases[0])}{int(bases[1])}{int(bases[2])}_outs{outs}.png"
@@ -11,6 +12,9 @@ def return_info_image_path(bases:list, outs:int):
 class MenuBarSports(rumps.App):
     def __init__(self):
         super().__init__("MenuBarSports") # default message (should never show)
+
+        self.settings = utils.load_settings()
+        self.team_id = self.settings.get('selected_team', 108)
 
         with open("teams.json") as f:
             teams = json.load(f)
@@ -26,13 +30,11 @@ class MenuBarSports(rumps.App):
             item = rumps.MenuItem(title, callback=self.select_option)
 
             # select first item
-            if i == 0:
+            if self.team_lookup.get(title) == self.team_id:
                 item.state = True
             self.options_menu.add(item)
 
         self.menu = [self.options_menu]
-
-        self.team_id = 119
 
     def select_option(self, sender):
         for title, item in self.options_menu.items():
@@ -41,6 +43,12 @@ class MenuBarSports(rumps.App):
 
         selected_team = sender.title
         self.team_id = self.team_lookup.get(selected_team, 141)
+
+        # update user settings
+        self.settings['selected_team'] = self.team_id
+        utils.save_settings(self.settings)
+
+        # update the menu bar
         self.update_team_info()
 
 
