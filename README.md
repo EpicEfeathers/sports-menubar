@@ -18,3 +18,8 @@ MenuSports is a live MLB feed, right to your menu bar. Select your favourite tea
 - **Live updates** – Stay up to date with real-time changes to baserunners, outs, innings, and the score as the game unfolds.
 - **Change selected team** – Easily switch which team is displayed in the menu bar.
 - **Live game feed link** – Quick access to MLB.com's live game feed for in-depth coverage
+
+## To-do List
+- Switch to Swift to access all the menu bar features
+- Add other sports
+- Add more submenus, like team standings, more in depth details, etc.
