@@ -1,7 +1,7 @@
 import requests
 from requests.exceptions import HTTPError, Timeout, ConnectionError
 
-from datetime import date
+from datetime import date, datetime
 import json
 
 def make_api_call(url):
@@ -58,19 +58,20 @@ def extract_game_info(game_id:int):
     try:
         game_data = content['gameData']
         game_state = game_data['status']['abstractGameState']
+        detailed_state = game_data['status']['detailedState']
 
         home_abbr = game_data['teams']['home']['abbreviation']
         away_abbr = game_data['teams']['away']['abbreviation']
 
+        datetime = game_data['datetime']['dateTime'] # datetime in ISO 8601 format
+        time = convert_datetime(datetime) # convert to human readable time
+
         # if previewing today's game
         if game_state == "Preview":
-            time = game_data['datetime']['time']
-            ampm = game_data['datetime']['ampm']
-            
             return {
                 "game_state": game_state,
+                "detailed_state": detailed_state,
                 "time": time,
-                "ampm": ampm,
                 "home_abbr": home_abbr,
                 "away_abbr": away_abbr,
                 "home_score": 0,
@@ -101,6 +102,8 @@ def extract_game_info(game_id:int):
 
         return {
             "game_state": game_state,
+            "detailed_state": detailed_state,
+            "time": time,
             "home_abbr": home_abbr,
             "away_abbr": away_abbr,
             "bases": bases,
@@ -116,3 +119,13 @@ def extract_game_info(game_id:int):
     except Exception as e:
         print(f"Exception occurred while fetching data: {e}")
         return None
+    
+
+def convert_datetime(date_time):
+    # take ISO 8601 date
+    utc_dt = datetime.fromisoformat(date_time)
+
+    # convert it to local timezone
+    local_dt = utc_dt.astimezone()
+
+    return local_dt.strftime("%I:%M%p")

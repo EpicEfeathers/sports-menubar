@@ -82,8 +82,8 @@ class MenuBarSports(rumps.App):
 
     # properly create title
     def update_title(self, info, im_path):
-        # if game is live
-        if info['game_state'] == "Live":
+        # if game is live AND in progress (not just in warmups etc.)
+        if info['game_state'] == "Live" and info['detailed_state'] == "In Progress":
             # make sure path exists
             if os.path.exists(im_path):
                 self.icon = im_path
@@ -100,7 +100,7 @@ class MenuBarSports(rumps.App):
             if info['game_state'] == "Final":
                 game_info = info['game_state']
             else:
-                game_info = f"{info['time']}{info['ampm']}"
+                game_info = f"{info['time']}"
             self.title = f"{game_info} • {info['away_abbr']} {info['away_score']} | {info['home_score']} {info['home_abbr']}"
 
 if __name__ == "__main__":
