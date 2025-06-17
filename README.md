@@ -23,3 +23,4 @@ MenuSports is a live MLB feed, right to your menu bar. Select your favourite tea
 - Switch to Swift to access all the menu bar features
 - Add other sports
 - Add more submenus, like team standings, more in depth details, etc.
+- Clean up code :P
